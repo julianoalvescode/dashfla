@@ -9,8 +9,9 @@ export function NavLink({ children, icon, ...rest }: I.NavLink) {
     <>
       <ActiveLink passHref {...rest}>
         <LinkComponent
-          transition="all 0.3s ease-in"
+          transition="all 300ms ease-in"
           _hover={{ textDecoration: "none", filter: "brightness(0.5)" }}
+          _focus={{ boxShadow: 0 }}
           display="flex"
           align="center"
           color="#fff"
