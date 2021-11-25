@@ -19,75 +19,61 @@ import { Header } from "components/Header";
 import { Pagination } from "components/Pagination";
 import { Sidebar } from "components/Sidebar";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
-import { useQuery } from "react-query";
 
 import { formatDate } from "helpers";
 
 import Link from "next/link";
-import { useEffect } from "react";
+
+import { useUser } from "hooks";
+import { useState } from "react";
 
 export default function UserList() {
-  const { data, isLoading, error } = useQuery(
-    "users",
-    async () => {
-      const response = await fetch("http://localhost:3000/api/users");
-      const data = await response.json();
-
-      const users = data?.users || [{}];
-
-      return users;
-    },
-    {
-      staleTime: 1000 * 5,
-    }
-  );
+  const [page, setPage] = useState(1);
+  const { users, totalCount, isLoading, error, isFetching } = useUser({ page });
 
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
   });
 
-  useEffect(() => {
-    fetch("http://localhost:3000/api/users")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  }, []);
-
   return (
     <Box>
       <Header />
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
         <Sidebar />
-        {isLoading ? (
-          <Flex justify="center">
-            <Spinner />
+        <Box flex="1" borderRadius={8} bg="gray.800" p="8">
+          <Flex mb="8" justify="space-between" align="center">
+            <Heading fontWeight="normal" size="lg">
+              Usuários
+              {!isLoading && isFetching && (
+                <Spinner size="sm" color="gray.500" ml="4" />
+              )}
+            </Heading>
+            <Link passHref href="/users/create">
+              <Button
+                cursor="pointer"
+                as="a"
+                fontSize="sm"
+                size="sm"
+                colorScheme="pink"
+                leftIcon={<Icon as={RiAddLine} />}
+              >
+                Criar novo
+              </Button>
+            </Link>
           </Flex>
-        ) : error ? (
-          <Box flex="1">
-            <Flex align="center">
-              <Text>Falha ao obter os dados dos usuários.</Text>
+          {isLoading ? (
+            <Flex justify="center">
+              <Spinner />
             </Flex>
-          </Box>
-        ) : (
-          <>
-            <Box flex="1" borderRadius={8} bg="gray.800" p="8">
-              <Flex mb="8" justify="space-between" align="center">
-                <Heading fontWeight="normal" size="lg">
-                  Usuários
-                </Heading>
-                <Link passHref href="/users/create">
-                  <Button
-                    cursor="pointer"
-                    as="a"
-                    fontSize="sm"
-                    size="sm"
-                    colorScheme="pink"
-                    leftIcon={<Icon as={RiAddLine} />}
-                  >
-                    Criar novo
-                  </Button>
-                </Link>
+          ) : error ? (
+            <Box flex="1">
+              <Flex align="center">
+                <Text>Falha ao obter os dados dos usuários.</Text>
               </Flex>
+            </Box>
+          ) : (
+            <>
               <Table colorScheme="whiteAlpha">
                 <Thead>
                   <Tr>
@@ -100,7 +86,7 @@ export default function UserList() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {data?.map((item, index) => (
+                  {users?.map((item, index) => (
                     <Tr key={index}>
                       <Td px={["4", "4", "6"]}>
                         <Checkbox colorScheme="pink" />
@@ -116,7 +102,7 @@ export default function UserList() {
                       {isWideVersion && (
                         <Td>
                           {formatDate({
-                            date: item.createdAt,
+                            date: item.createdAt || new Date(),
                             props: { format: "Pp" },
                           })}
                         </Td>
@@ -139,10 +125,14 @@ export default function UserList() {
                   ))}
                 </Tbody>
               </Table>
-              <Pagination />
-            </Box>
-          </>
-        )}
+              <Pagination
+                totalCountOfRegisters={totalCount}
+                currentPage={page}
+                onPageChange={setPage}
+              />
+            </>
+          )}
+        </Box>
       </Flex>
     </Box>
   );

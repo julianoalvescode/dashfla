@@ -4,6 +4,7 @@ import * as I from "./types";
 export function PaginationItem({
   number,
   isCurrent = false,
+  onPageChange,
 }: I.PaginationItem) {
   switch (isCurrent) {
     case true:
@@ -27,6 +28,7 @@ export function PaginationItem({
           width="4"
           bgColor="gray.700"
           _hover={{ bgColor: "gray.500" }}
+          onClick={() => onPageChange(number)}
         >
           {number}
         </Button>
