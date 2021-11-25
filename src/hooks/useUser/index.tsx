@@ -20,7 +20,7 @@ export function useUser({ page = 1 }: I.Params): I.ModelUser {
       return { users, totalCount };
     },
     {
-      staleTime: 1000 * 5,
+      staleTime: 1000 * 60 * 10, // 10 minutes,
     }
   );
 
