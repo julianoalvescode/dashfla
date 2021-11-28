@@ -13,9 +13,9 @@ export function PaginationItem({
           size="sm"
           fontSize="xs"
           width="4"
-          colorScheme="pink"
+          colorScheme="red"
           disabled
-          _disabled={{ bgColor: "pink.500", cursor: "default" }}
+          _disabled={{ bgColor: "red.500", cursor: "default" }}
         >
           {number}
         </Button>

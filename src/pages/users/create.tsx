@@ -127,7 +127,7 @@ export default function CreateUser() {
                   Cancelar
                 </Button>
               </Link>
-              <Button isLoading={isSubmitting} type="submit" colorScheme="pink">
+              <Button isLoading={isSubmitting} type="submit" colorScheme="red">
                 Salvar
               </Button>
             </HStack>

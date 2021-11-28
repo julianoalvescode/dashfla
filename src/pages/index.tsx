@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "hooks";
 
+import Head from "next/head";
+
 import * as yup from "yup";
 
 const schemaSignIn = yup.object().shape({
@@ -24,6 +26,9 @@ export default function SignIn() {
 
   return (
     <>
+      <Head>
+        <title>Clube de Regatas do Flamengo | Login</title>
+      </Head>
       <Flex w="100vw" h="100vh" align="center" justify="center" color="#fff">
         <Flex
           as="form"
@@ -52,7 +57,7 @@ export default function SignIn() {
               type="password"
             />
             <Button
-              colorScheme="pink"
+              colorScheme="red"
               isLoading={isSubmitting}
               type="submit"
               mt="6"

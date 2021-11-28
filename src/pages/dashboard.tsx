@@ -1,6 +1,7 @@
 import { Flex, SimpleGrid, Box, Text, theme } from "@chakra-ui/react";
 import { Header } from "components/Header";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { Sidebar } from "components/Sidebar";
 
 import { ApexOptions } from "apexcharts";
@@ -67,6 +68,9 @@ const series = [
 export default function Dashboard() {
   return (
     <>
+      <Head>
+        <title>Clube de Regatas do Flamengo | Dashboard</title>
+      </Head>
       <Flex direction="column" h="100vh">
         <Header />
         <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">

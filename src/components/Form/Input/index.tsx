@@ -22,7 +22,7 @@ export function Input({ label, name, error, control, type }: I.InputProps) {
             type={type}
             variant="filled"
             bgColor="gray.900"
-            focusBorderColor="pink.500"
+            focusBorderColor="red.500"
             _hover={{ bgColor: "gray.900" }}
             size="lg"
             {...field}
