@@ -28,7 +28,7 @@ import Link from "next/link";
 import { useUser } from "hooks";
 import { useState } from "react";
 import { queryClient } from "services/react-query";
-import { HttpClient } from "services/api";
+import { HttpClientMirage } from "services/api";
 
 export default function UserList() {
   const [page, setPage] = useState(1);
@@ -43,7 +43,7 @@ export default function UserList() {
     await queryClient.prefetchQuery(
       ["user", userId],
       async () => {
-        const { data } = await HttpClient.get(`/users/${userId}`);
+        const { data } = await HttpClientMirage.get(`/users/${userId}`);
         return data;
       },
       {

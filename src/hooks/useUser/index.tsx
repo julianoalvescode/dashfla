@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { HttpClient } from "services/api";
+import { HttpClientMirage } from "services/api";
 
 import * as I from "./types";
 
@@ -7,7 +7,7 @@ export function useUser({ page = 1 }: I.Params): I.ModelUser {
   const { data, isLoading, error, isFetching } = useQuery<I.GetUserResponse>(
     ["users", page],
     async () => {
-      const { data, headers } = await HttpClient.get("/users", {
+      const { data, headers } = await HttpClientMirage.get("/users", {
         params: {
           page,
         },

@@ -1,9 +1,8 @@
 import { Flex, Button, Stack } from "@chakra-ui/react";
-
 import { Input } from "components/Form";
 import { useForm } from "react-hook-form";
-
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "hooks";
 
 import * as yup from "yup";
 
@@ -13,6 +12,8 @@ const schemaSignIn = yup.object().shape({
 });
 
 export default function SignIn() {
+  const { signIn } = useAuth();
+
   const {
     handleSubmit,
     control,
@@ -20,15 +21,6 @@ export default function SignIn() {
   } = useForm({
     resolver: yupResolver(schemaSignIn),
   });
-
-  function onSign(data): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log(data);
-        resolve();
-      }, 1000);
-    });
-  }
 
   return (
     <>
@@ -42,7 +34,7 @@ export default function SignIn() {
           borderRadius={8}
           flexDirection="column"
           gridGap={8}
-          onSubmit={handleSubmit(onSign)}
+          onSubmit={handleSubmit(signIn)}
         >
           <Stack spacing="8">
             <Input

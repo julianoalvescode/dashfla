@@ -16,7 +16,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "react-query";
-import { HttpClient } from "services/api";
+import { HttpClientMirage } from "services/api";
 import { queryClient } from "services/react-query";
 import { useRouter } from "next/router";
 
@@ -42,7 +42,7 @@ export default function CreateUser() {
 
   const createUser = useMutation(
     async (user: CreateUserFormData) => {
-      await HttpClient.post("users", {
+      await HttpClientMirage.post("users", {
         user: {
           ...user,
           created_at: new Date(),
